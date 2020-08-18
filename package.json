@@ -1,0 +1,21 @@
+{
+  "name": "url-shortener",
+  "version": "1.0.0",
+  "description": "Fun project to produce a URL Shortener with Mongo, Kubernetes and Kubeless",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Poimen/url-shortener.git"
+  },
+  "keywords": [],
+  "author": "Richard Shephard",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Poimen/url-shortener/issues"
+  },
+  "homepage": "https://github.com/Poimen/url-shortener#readme"
+}
