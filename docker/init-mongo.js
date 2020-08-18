@@ -9,6 +9,6 @@ db.createUser({
 });
 
 db.createCollection('shorts');
-db.shorts.createIndex({ hash: 1 });
+db.shorts.createIndex({ hash: 1 }, { unique: true });
 
 db.createCollection('stats');
