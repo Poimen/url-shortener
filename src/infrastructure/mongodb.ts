@@ -1,8 +1,8 @@
-import mongoose, { Schema } from 'mongoose';
-import { nanoid } from 'nanoid';
+import mongoose from 'mongoose';
 import config from '@/configuration/config';
 import { UrlDetail } from '@/domain/models/urlDetail';
 import { IUrlShortenerDb, IDbConnectionFactory } from './IDb';
+import { shortsModel } from '@/database/shorts';
 
 const mongoConnectionString = (collection: string) => `mongodb://${config.mongodbIP}/${collection}`;
 
@@ -24,22 +24,7 @@ export class MongoDbCollection implements IUrlShortenerDb {
   constructor(
     private _connection: mongoose.Connection
   ) {
-    const shortsSchema = new Schema({
-      _id: {
-        type: String,
-        default: () => nanoid()
-      },
-      shortUrl: {
-        type: String
-      },
-      longUrl: {
-        type: String
-      },
-      validUntil: {
-        type: Date
-      }
-    });
-    this._shortModel = mongoose.model('short', shortsSchema);
+    this._shortModel = shortsModel;
   }
 
   async save(url: UrlDetail): Promise<void> {
