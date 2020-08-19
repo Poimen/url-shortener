@@ -2,7 +2,8 @@
 export class Config {
   constructor(
     public listen_port: number,
-    public version: string
+    public version: string,
+    public mongodb_ip: string
   ) { }
 }
 
@@ -14,13 +15,10 @@ class AppConfiguration {
   }
 
   constructor() {
-    this.loadConfigurationFromEnvironment();
-  }
-
-  private loadConfigurationFromEnvironment() {
     this._config = new Config(
-      parseInt(process.env.PORT, 10),
-      process.env.VERSION
+      parseInt(process.env.PORT || '3000', 10),
+      process.env.VERSION || '0.0.0.0',
+      process.env.MONGODB_IP || '127.0.0.1'
     );
   }
 }
