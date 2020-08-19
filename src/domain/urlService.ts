@@ -5,7 +5,7 @@ import { UserUrlDto } from '@/controllers/admin/models/userUrlDto';
 import { ValidityDate } from './models/validityDate';
 
 const defaultHashLength = 7;
-const defaultLengthAttempts = 3;
+const storageLengthAttempts = 3;
 const fallbackHashLength = 8;
 
 export class UrlService {
@@ -15,7 +15,17 @@ export class UrlService {
   }
 
   public async recordShortUrlVersion(userUrl: UserUrlDto): Promise<UrlDetail> {
-    for (let i = 0; i < defaultLengthAttempts; ++i) {
+    let urlDetail = await this.safeTryStoreUrl(userUrl, defaultHashLength);
+    if (urlDetail) {
+      return urlDetail;
+    }
+    // Last attempt at fallback hash length
+    urlDetail = await this.attemptUrlStore(userUrl, fallbackHashLength);
+    return urlDetail;
+  }
+
+  private async safeTryStoreUrl(userUrl: UserUrlDto, hashLength: number): Promise<UrlDetail|undefined> {
+    for (let i = 0; i < storageLengthAttempts; ++i) {
       try {
         const urlDetail = await this.attemptUrlStore(userUrl, defaultHashLength);
         return urlDetail;
@@ -24,12 +34,10 @@ export class UrlService {
         // TODO - log conflict detection into stats
       }
     }
-    // Last attempt at fallback hash length
-    const urlDetail = await this.attemptUrlStore(userUrl, fallbackHashLength);
-    return urlDetail;
+    return undefined;
   }
 
-  private async attemptUrlStore(userUrl: UserUrlDto, hashLength: number) {
+  private async attemptUrlStore(userUrl: UserUrlDto, hashLength: number): Promise<UrlDetail> {
     const validityDate = new ValidityDate(userUrl.validUntil);
     const hash = await this.generateNewHash(hashLength);
     // TODO - get short baseurl from config
