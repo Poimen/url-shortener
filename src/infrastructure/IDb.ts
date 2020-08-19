@@ -7,5 +7,4 @@ export interface IDbConnectionFactory {
 export interface IUrlShortenerDb {
   save(url: UrlDetail): Promise<void>;
   get(hash: string): Promise<UrlDetail>;
-  getByLongUrl(longUrl: string): Promise<UrlDetail>;
 }

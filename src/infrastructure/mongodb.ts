@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import config from '@/configuration/config';
 import { UrlDetail } from '@/domain/models/urlDetail';
 import { IUrlShortenerDb, IDbConnectionFactory } from './IDb';
-import { shortsModel } from '@/database/shorts';
+import { shortsModel, IShort } from '@/database/shorts';
 
 const mongoConnectionString = (collection: string) => `mongodb://${config.mongodbIP}/${collection}`;
 
@@ -19,7 +19,7 @@ export class MongoDatabaseConnector implements IDbConnectionFactory {
 }
 
 export class MongoDbCollection implements IUrlShortenerDb {
-  private _shortModel: mongoose.Model<mongoose.Document, {}>;
+  private _shortModel: mongoose.Model<mongoose.Document, IShort>;
 
   constructor(
     private _connection: mongoose.Connection
@@ -30,10 +30,6 @@ export class MongoDbCollection implements IUrlShortenerDb {
   async save(url: UrlDetail): Promise<void> {
     const instance = new this._shortModel({ shortUrl: url.shortUrl, longUrl: url.longUrl, validUntil: url.validUntil });
     await instance.save();
-  }
-
-  getByLongUrl(longUrl: string): Promise<UrlDetail> {
-    throw new Error('Method not implemented.');
   }
 
   get(): Promise<UrlDetail> {
