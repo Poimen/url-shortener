@@ -1,7 +1,8 @@
-version: '3'
+version: '3.5'
 services:
   db-mongo:
     image: mongo:4.4.0
+    container_name: short-mongodb
     restart: always
     ports:
       - 27017:27017
@@ -17,6 +18,7 @@ services:
 
   mongo-express:
     image: mongo-express:0.54.0
+    container_name: short-mongo-express
     restart: always
     ports:
       - 8300:8081
@@ -28,5 +30,17 @@ services:
     networks:
       - short-url-net
 
+  redis:
+    image: redis:6.0.6-alpine
+    container_name: short-redis
+    restart: always
+    ports:
+      - 6379:6379
+    volumes:
+      - ./volumes/redis:/data
+    networks:
+      - short-url-net
+
 networks:
   short-url-net:
+    name: short-url-net
