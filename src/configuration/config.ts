@@ -1,9 +1,11 @@
 
 export class Config {
   constructor(
-    public listen_port: number,
+    public listenPort: number,
     public version: string,
-    public mongodb_ip: string
+    public mongodbIP: string,
+    public mongoUser: string,
+    public mongoPassword: string
   ) { }
 }
 
@@ -18,7 +20,9 @@ class AppConfiguration {
     this._config = new Config(
       parseInt(process.env.PORT || '3000', 10),
       process.env.VERSION || '0.0.0.0',
-      process.env.MONGODB_IP || '127.0.0.1'
+      process.env.MONGODB_IP || '127.0.0.1',
+      process.env.MONGO_USER || '',
+      process.env.MONGO_PWD || ''
     );
   }
 }

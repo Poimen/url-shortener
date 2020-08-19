@@ -4,13 +4,17 @@ export class UrlDetail {
   // TODO - set to min date
   public static Empty = new UrlDetail('', '', ValidityDate.Invalid);
 
+  public get validUntil(): Date|undefined {
+    return this._validUntil?.date;
+  }
+
   constructor(
     public longUrl: string,
     public shortUrl: string,
-    public validUntil?: ValidityDate
+    private _validUntil?: ValidityDate
   ) {}
 
   public isValid(): boolean {
-    return (this.validUntil?.isValid() && this.validUntil.isFuture()) || true;
+    return (this._validUntil?.isValid() && this._validUntil.isFuture()) || true;
   }
 }

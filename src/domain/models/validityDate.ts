@@ -6,6 +6,10 @@ export class ValidityDate {
 
   public static Invalid: ValidityDate = new ValidityDate();
 
+  public get date(): Date|undefined {
+    return this._date;
+  }
+
   constructor(
     date?: string
   ) {

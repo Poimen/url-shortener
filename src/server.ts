@@ -22,5 +22,5 @@ apiRoutes.forEach(route => {
 export function startServer() {
   const welcome = (port: number) => () => console.log(`up and running in ${process.env.NODE_ENV || 'development'} on ${os.hostname()} on port: ${port}`);
 
-  app.listen(config.listen_port, welcome(config.listen_port));
+  app.listen(config.listenPort, welcome(config.listenPort));
 }
