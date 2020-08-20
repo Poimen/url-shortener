@@ -1,7 +1,7 @@
 import { customAlphabet } from 'nanoid/async';
 import { UrlDetail } from './models/urlDetail';
 import { IUrlShortenerDb } from '@/infrastructure/IDb';
-import { UserUrlDto } from '@/controllers/admin/models/userUrlDto';
+import { CreateShortUrlDto } from '@/controllers/admin/models/createShortUrlDto';
 import { ValidityDate } from './models/validityDate';
 
 const defaultHashLength = 7;
@@ -14,7 +14,7 @@ export class UrlService {
   ) {
   }
 
-  public async recordShortUrlVersion(userUrl: UserUrlDto): Promise<UrlDetail> {
+  public async recordShortUrlVersion(userUrl: CreateShortUrlDto): Promise<UrlDetail> {
     let urlDetail = await this.safeTryStoreUrl(userUrl, defaultHashLength);
     if (urlDetail) {
       return urlDetail;
@@ -24,7 +24,7 @@ export class UrlService {
     return urlDetail;
   }
 
-  private async safeTryStoreUrl(userUrl: UserUrlDto, hashLength: number): Promise<UrlDetail|undefined> {
+  private async safeTryStoreUrl(userUrl: CreateShortUrlDto, hashLength: number): Promise<UrlDetail|undefined> {
     for (let i = 0; i < storageLengthAttempts; ++i) {
       try {
         const urlDetail = await this.attemptUrlStore(userUrl, defaultHashLength);
@@ -37,7 +37,7 @@ export class UrlService {
     return undefined;
   }
 
-  private async attemptUrlStore(userUrl: UserUrlDto, hashLength: number): Promise<UrlDetail> {
+  private async attemptUrlStore(userUrl: CreateShortUrlDto, hashLength: number): Promise<UrlDetail> {
     const validityDate = new ValidityDate(userUrl.validUntil);
     const hash = await this.generateNewHash(hashLength);
     // TODO - get short baseurl from config
