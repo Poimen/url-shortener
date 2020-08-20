@@ -1,13 +1,13 @@
 import mongoose from 'mongoose';
 import { nanoid } from 'nanoid';
 
-export interface IShort extends mongoose.Document {
+export interface IShortUrl extends mongoose.Document {
   shortUrl: string;
   longUrl: string;
   validUntil: Date;
 }
 
-const shortsSchema = new mongoose.Schema({
+const shortUrlSchema = new mongoose.Schema({
   _id: {
     type: String,
     default: () => nanoid()
@@ -30,5 +30,5 @@ const shortsSchema = new mongoose.Schema({
 // What would be nice is linking the collection, name and schema together
 // In a larger world example, having an IOC injection would be useful to
 // inject and control the models...
-const ShortUrl: mongoose.Model<IShort> = mongoose.model('short', shortsSchema);
+const ShortUrl: mongoose.Model<IShortUrl> = mongoose.model('short-url', shortUrlSchema);
 export default ShortUrl;

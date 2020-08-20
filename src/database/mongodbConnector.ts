@@ -16,12 +16,14 @@ function connectionEstablished() {
 }
 
 export function connectToDatabase() {
-  const connectionString = mongoConnectionString('shorts');
+  const connectionString = mongoConnectionString('url-shortener');
   const options: mongoose.ConnectionOptions = {
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false,
     useUnifiedTopology: true,
+    user: config.mongoUser,
+    pass: config.mongoPassword
   };
 
   mongoose.connect(connectionString, options);

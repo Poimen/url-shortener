@@ -5,7 +5,8 @@ export class Config {
     public version: string,
     public mongodbIP: string,
     public mongoUser: string,
-    public mongoPassword: string
+    public mongoPassword: string,
+    public baseShortUrl: string
   ) { }
 }
 
@@ -22,7 +23,8 @@ class AppConfiguration {
       process.env.VERSION || '0.0.0.0',
       process.env.MONGODB_IP || '127.0.0.1',
       process.env.MONGO_USER || '',
-      process.env.MONGO_PWD || ''
+      process.env.MONGO_PWD || '',
+      process.env.BASE_SHORT_URL || 'http://localhost'
     );
   }
 }
