@@ -14,7 +14,7 @@ export class Controller {
   public async createShortUrl(req: Request, res: Response): Promise<void> {
     try {
       const userUrl = new CreateShortUrlDto(req.body.url, req.body.validUntil);
-      const url = await urlService.recordShortUrlVersion(userUrl);
+      const url = await urlService.recordShortUrl(userUrl);
 
       if (url == UrlDetail.Empty) {
           res.status(HttpStatusCodes.CONFLICT).json({ errors: 'Failed to store url' });

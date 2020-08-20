@@ -5,13 +5,17 @@ import ShortUrl from '@/database/models/shortUrl';
 const storageLengthAttempts = 3;
 
 export class UrlService {
-  public async recordShortUrlVersion(urlCreation: CreateShortUrlDto): Promise<UrlDetail> {
+  public async recordShortUrl(urlCreation: CreateShortUrlDto): Promise<UrlDetail> {
     const urlDetail = await UrlDetail.fromCreateUrl(urlCreation);
-    const resultantDetails = await this.safeTryStoreUrl(urlDetail);
+    const resultantDetails = await this.safeStoreUrl(urlDetail);
     return resultantDetails ? resultantDetails : UrlDetail.Empty;
   }
 
-  private async safeTryStoreUrl(urlDetail: UrlDetail): Promise<UrlDetail|undefined> {
+  public async findByHash(hash: string) {
+
+  }
+
+  private async safeStoreUrl(urlDetail: UrlDetail): Promise<UrlDetail|undefined> {
     for (let i = 0; i < storageLengthAttempts; ++i) {
       try {
         await this.attemptUrlStore(urlDetail);
@@ -25,7 +29,11 @@ export class UrlService {
   }
 
   private async attemptUrlStore(urlDetail: UrlDetail) {
-    const shortModel = new ShortUrl({ longUrl: urlDetail.longUrl, shortUrl: urlDetail.shortUrl, validUntil: urlDetail.validUntil });
+    const shortModel = new ShortUrl({ longUrl: urlDetail.longUrl, shortHash: urlDetail.shortHash, validUntil: urlDetail.validUntil });
     await shortModel.save();
+  }
+
+  private async findUrlFromHash(urlHashCode: string) {
+    const shortModel = await ShortUrl.findOne({ shortHash: urlHashCode });
   }
 }

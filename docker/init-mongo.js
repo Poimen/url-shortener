@@ -9,6 +9,6 @@ db.createUser({
 });
 
 db.createCollection('short-urls');
-db.shorts.createIndex({ shortUrl: 1 }, { unique: true });
+db.shorts.createIndex({ shortHash: 1 }, { unique: true });
 
 db.createCollection('stats');

@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import { nanoid } from 'nanoid';
 
 export interface IShortUrl extends mongoose.Document {
-  shortUrl: string;
+  shortHash: string;
   longUrl: string;
   validUntil: Date;
 }
@@ -12,7 +12,7 @@ const shortUrlSchema = new mongoose.Schema({
     type: String,
     default: () => nanoid()
   },
-  shortUrl: {
+  shortHash: {
     type: String,
     required: true,
     unique: true
