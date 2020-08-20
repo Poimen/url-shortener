@@ -8,7 +8,7 @@ db.createUser({
   roles: [ 'readWrite' ]
 });
 
-db.createCollection('short-urls');
-db.shorts.createIndex({ shortHash: 1 }, { unique: true });
+db.createCollection('shorturls');
+db.shorturls.createIndex({ shortHash: 1 }, { unique: true });
 
 db.createCollection('stats');

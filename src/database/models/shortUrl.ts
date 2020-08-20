@@ -30,5 +30,5 @@ const shortUrlSchema = new mongoose.Schema({
 // What would be nice is linking the collection, name and schema together
 // In a larger world example, having an IOC injection would be useful to
 // inject and control the models...
-const ShortUrl: mongoose.Model<IShortUrl> = mongoose.model('short-url', shortUrlSchema);
+const ShortUrl: mongoose.Model<IShortUrl> = mongoose.model('shorturl', shortUrlSchema);
 export default ShortUrl;
