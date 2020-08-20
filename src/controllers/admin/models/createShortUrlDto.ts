@@ -1,5 +1,4 @@
-import { validationResult, body, check } from 'express-validator';
-import { Request, Response, NextFunction } from 'express';
+import { check } from 'express-validator';
 
 export class CreateShortUrlDto {
   constructor(
