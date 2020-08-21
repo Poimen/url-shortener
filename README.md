@@ -1,12 +1,14 @@
 # url-shortener
 
-Fun project to produce a URL Shortener.
+Fun project to produce a URL Shortener....enter the Enterprise URL shortner.
 
 There are two implementation:
- - MongoDB and Kubeless
- - MongoDB and Express
+ - MongoDB and Kubeless (TBD)
+ - MongoDB and Express (WIP)
 
-This is currently a work-in-progress...enter the Enterprise URL shortner. This is overly engineered on purpose to have a little fun with the domain as well as to test out some DDD concepts.
+This is currently a work-in-progress.
+
+This is overly engineered on purpose to have a little fun with the domain as well as to test out some DDD concepts.
 
 If I have energy I will add some tests, but right now this is just a test repo.
 
@@ -16,7 +18,9 @@ The purpose is to create short urls...just for fun and because you can.
 
 At last check, there is no real money to be made out of shortening URLs but it is a fairly interesting problem to solve at scale. The naive implementation can just push a shortened URL hash (base62, MD5, SHA256, etc.) to a database and ignore the potential collisions. This works fine and can be done in a few lines of code. This implementation just loops on storage...fancy, I know.
 
-However, once we consider collisions and scale, then the system becomes more interesting.
+If the write side was needing to be truly performant you could run a number of counter services behind a load balancer that can provide seed indexes to the generator. Another option is to use a queue that is consumed with services that confirms the integrtity out-of-band.
+
+Either way, eventually collisions will happen, and for fun, maybe this will be done.
 
 ## Design considerations
 
