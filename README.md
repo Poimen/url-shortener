@@ -63,6 +63,11 @@ cd docker
 docker-compose up -d
 ```
 
+4. Start development server
+```shell
+npm run dev
+```
+
 ### Testing Express
 
 A rest file is provided to be used with the [REST client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) extension in VS Code. These can be adapted to Postman scripts.
