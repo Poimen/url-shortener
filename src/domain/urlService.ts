@@ -1,6 +1,7 @@
 import { UrlDetail } from './models/urlDetail';
 import { CreateShortUrlDto } from '@/controllers/admin/models/createShortUrlDto';
 import ShortUrl from '@/database/models/shortUrl';
+import l from '@/logger';
 
 const storageLengthAttempts = 3;
 
@@ -27,6 +28,7 @@ export class UrlService {
       }
       catch {
         // TODO - log conflict detection into stats
+        l.warn(`CONFLICT in URL generation at iteration: ${i}`);
       }
     }
     return undefined;
