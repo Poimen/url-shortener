@@ -26,16 +26,17 @@ export class UrlService {
         await this.attemptUrlStore(urlDetail);
         return urlDetail;
       }
-      catch {
+      catch (e) {
         // TODO - log conflict detection into stats
         l.warn(`CONFLICT in URL generation at iteration: ${i}`);
+        l.warn(e);
       }
     }
     return undefined;
   }
 
   private async attemptUrlStore(urlDetail: UrlDetail) {
-    const shortModel = new ShortUrl({ longUrl: urlDetail.longUrl, shortHash: urlDetail.shortHash, validUntil: urlDetail.validUntil });
+    const shortModel = new ShortUrl({ longUrl: urlDetail.longUrl, shortHash: urlDetail.shortHash, shortUrl: urlDetail.shortUrl, validUntil: urlDetail.validUntil });
     await shortModel.save();
   }
 
