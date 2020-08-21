@@ -2,6 +2,7 @@ import { customAlphabet } from 'nanoid/async';
 import config from '@/configuration/config';
 import { ValidityDate } from './validityDate';
 import { CreateShortUrlDto } from '@/controllers/admin/models/createShortUrlDto';
+import { IShortUrl } from '@/database/models/shortUrl';
 
 const defaultHashLength = 7;
 
@@ -26,9 +27,16 @@ export class UrlDetail {
   }
 
   public static async fromCreateUrl(createUrl: CreateShortUrlDto): Promise<UrlDetail> {
-    const { shortUrl, shortHash } = await UrlDetail.buildShortUrl(config.baseShortUrl, defaultHashLength);
+    const { shortUrl, shortHash } = await UrlDetail.generateShortUrl(config.baseShortUrl, defaultHashLength);
 
     return new UrlDetail(createUrl.longUrl, shortUrl, shortHash, new ValidityDate(createUrl.validUntil));
+  }
+
+  public static fromDb(model: IShortUrl | null) {
+    if (model) {
+      return new UrlDetail(model.longUrl, model.shortHash, model.shortUrl, new ValidityDate(model.validUntil));
+    }
+    return UrlDetail.Empty;
   }
 
   public isValid(): boolean {
@@ -36,16 +44,20 @@ export class UrlDetail {
   }
 
   public async generateNextHash() {
-    const { shortUrl, shortHash } = await UrlDetail.buildShortUrl(config.baseShortUrl, defaultHashLength);
+    const { shortUrl, shortHash } = await UrlDetail.generateShortUrl(config.baseShortUrl, defaultHashLength);
     this.shortUrl = shortUrl;
     this.shortHash = shortHash;
   }
 
-  private static async buildShortUrl(baseUrl: string, hashLength: number): Promise<{ shortUrl: string, shortHash: string }> {
+  private static async generateShortUrl(baseUrl: string, hashLength: number): Promise<{ shortUrl: string, shortHash: string }> {
     const hash = await generateShortCodeHash(hashLength);
     return {
-      shortUrl: `${baseUrl}/${hash}`,
+      shortUrl: UrlDetail.buildShortUrl(baseUrl, hash),
       shortHash: hash
     };
+  }
+
+  private static buildShortUrl(baseUrl: string, hash: string) {
+    return `${baseUrl}/${hash}`;
   }
 }

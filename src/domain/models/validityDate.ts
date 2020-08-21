@@ -6,15 +6,16 @@ export class ValidityDate {
 
   public static Invalid: ValidityDate = new ValidityDate();
 
-  public get date(): Date|undefined {
+  public get date(): Date | undefined {
     return this._date;
   }
 
   constructor(
-    date?: string
+    date?: Date | string
   ) {
     if (date) {
-      this._date = parse(date, 'yyyy-MM-dd', new Date());
+      const stringifiedDate = date.toString();
+      this._date = parse(stringifiedDate, 'yyyy-MM-dd', new Date());
     }
   }
 

@@ -12,18 +12,22 @@ export class UrlService {
   }
 
   public async findByHash(hash: string) {
-
+    const urlDetail = await this.findUrlFromHash(hash);
+    if (urlDetail.isValid()) {
+      return urlDetail;
+    }
+    return UrlDetail.Empty;
   }
 
-  private async safeStoreUrl(urlDetail: UrlDetail): Promise<UrlDetail|undefined> {
+  private async safeStoreUrl(urlDetail: UrlDetail): Promise<UrlDetail | undefined> {
     for (let i = 0; i < storageLengthAttempts; ++i) {
-      // try {
+      try {
         await this.attemptUrlStore(urlDetail);
         return urlDetail;
-      // }
-      // catch {
-      //   // TODO - log conflict detection into stats
-      // }
+      }
+      catch {
+        // TODO - log conflict detection into stats
+      }
     }
     return undefined;
   }
@@ -33,7 +37,8 @@ export class UrlService {
     await shortModel.save();
   }
 
-  private async findUrlFromHash(urlHashCode: string) {
+  private async findUrlFromHash(urlHashCode: string): Promise<UrlDetail> {
     const shortModel = await ShortUrl.findOne({ shortHash: urlHashCode });
+    return UrlDetail.fromDb(shortModel);
   }
 }
