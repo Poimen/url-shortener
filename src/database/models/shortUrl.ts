@@ -15,7 +15,8 @@ const shortUrlSchema = new mongoose.Schema({
   shortHash: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
+    index: true
   },
   longUrl: {
     type: String,
