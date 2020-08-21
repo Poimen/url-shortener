@@ -18,7 +18,7 @@ The purpose is to create short urls...just for fun and because you can.
 
 At last check, there is no real money to be made out of shortening URLs but it is a fairly interesting problem to solve at scale. The naive implementation can just push a shortened URL hash (base62, MD5, SHA256, etc.) to a database and ignore the potential collisions. This works fine and can be done in a few lines of code. This implementation just loops on storage...fancy, I know.
 
-If the write side was needing to be truly performant you could run a number of counter services behind a load balancer that can provide seed indexes to the generator. Another option is to use a queue that is consumed with services that confirms the integrtity out-of-band.
+If the write side was needing to be truly performant you could run a number of counter services behind a load balancer that can provide seed indexes to the generator. Another option is to use a queue that is consumed with services that confirms the integrity out-of-band.
 
 Either way, eventually collisions will happen, and for fun, maybe this will be done.
 
@@ -51,8 +51,8 @@ http://localhost:3002/api/v1/admin
 
 ## Getting Started (Express)
 
-1. Clone rpeo
-2. Install depenedencies:
+1. Clone repo
+2. Install dependencies:
 ```shell
 npm install
 ```
