@@ -17,13 +17,13 @@ export class UrlService {
 
   private async safeStoreUrl(urlDetail: UrlDetail): Promise<UrlDetail|undefined> {
     for (let i = 0; i < storageLengthAttempts; ++i) {
-      try {
+      // try {
         await this.attemptUrlStore(urlDetail);
         return urlDetail;
-      }
-      catch {
-        // TODO - log conflict detection into stats
-      }
+      // }
+      // catch {
+      //   // TODO - log conflict detection into stats
+      // }
     }
     return undefined;
   }
