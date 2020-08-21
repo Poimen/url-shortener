@@ -12,6 +12,7 @@
     "baseUrl": ".",
     "inlineSources": true,
     "resolveJsonModule": true,
+    "experimentalDecorators": true,
     "paths": {
       "@/*": [
         "src/*"
