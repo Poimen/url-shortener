@@ -31,7 +31,8 @@
     "morgan": "^1.10.0",
     "nanoid": "^3.1.12",
     "tsconfig-paths": "^3.9.0",
-    "typescript": "^3.9.7"
+    "typescript": "^3.9.7",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "@types/cors": "^2.8.7",
