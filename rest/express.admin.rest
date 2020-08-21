@@ -1,0 +1,10 @@
+### POST endpoint for creation of short url
+POST http://localhost:3002/api/v1/admin
+Content-Type: application/json
+
+{
+  "url": "https://www.google.com/"
+}
+
+### GET for redirect (update based on generated url)
+GET http://localhost:3002/RadxgXH
